@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 void main() => runApp(MyApp());
 
@@ -16,6 +18,18 @@ class MyApp extends StatelessWidget {
 class RandomWordsState extends State<RandomWords> {
   final _suggestions = <WordPair>[];
   final _biggerFont = const TextStyle(fontSize: 18.0);
+
+  File _image;
+
+  Future getImage() async {
+    var image = await ImagePicker.pickImage(source: ImageSource.camera);
+
+    setState(() {
+      _image = image;
+    }
+  );
+}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +37,10 @@ class RandomWordsState extends State<RandomWords> {
         title: Text('Startup Name Generator'),
       ),
       body:_buildSuggestions(),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add_a_photo),
+        onPressed: getImage,
+      ),
     );
   }
   Widget _buildSuggestions() {
