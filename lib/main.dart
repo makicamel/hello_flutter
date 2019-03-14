@@ -26,9 +26,8 @@ class RandomWordsState extends State<RandomWords> {
 
     setState(() {
       _image = image;
-    }
-  );
-}
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +45,10 @@ class RandomWordsState extends State<RandomWords> {
   Widget _buildSuggestions() {
     return ListView.builder(
       padding: const EdgeInsets.all(16.0),
-      itemBuilder: /*1*/ (context, i) {
-        if (i.isOdd) return Divider(); /*2*/
+      itemBuilder: (context, i) {
+        if (i.isOdd) return Divider();
 
-        final index = i ~/2; /*3*/
+        final index = i ~/2;
         if (index >= _suggestions.length) {
           _suggestions.addAll(generateWordPairs().take(10));
         }
