@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('none'),
       ),
-      body: RandomWords.buildSuggestions(),
+      body: (new RandomWords()).buildSuggestions(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add_a_photo),
         onPressed: getImage,
@@ -48,7 +48,7 @@ class RandomWords {
   final _suggestions = <WordPair>[];
   final _biggerFont = const TextStyle(fontSize: 18.0);
 
-  static Widget buildSuggestions() {
+  Widget buildSuggestions() {
     return ListView.builder(
       padding: const EdgeInsets.all(16.0),
       itemBuilder: (context, i) {
