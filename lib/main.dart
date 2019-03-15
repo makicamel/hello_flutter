@@ -9,40 +9,46 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Startup Name Generator',
-      home: RandomWords(),
+      title: 'Startup Name Generator!',
+      home: MyHomePage(),
     );
   }
 }
 
-class RandomWordsState extends State<RandomWords> {
-  final _suggestions = <WordPair>[];
-  final _biggerFont = const TextStyle(fontSize: 18.0);
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
 
+class _MyHomePageState extends State<MyHomePage> {
   File _image;
-
   Future getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
-
     setState(() {
       _image = image;
     });
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        title: Text('Startup Name Generator'),
+        title: Text('none'),
       ),
-      body:_buildSuggestions(),
+      body: RandomWords.buildSuggestions(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add_a_photo),
         onPressed: getImage,
       ),
     );
   }
-  Widget _buildSuggestions() {
+}
+
+class RandomWords {
+  final _suggestions = <WordPair>[];
+  final _biggerFont = const TextStyle(fontSize: 18.0);
+
+  static Widget buildSuggestions() {
     return ListView.builder(
       padding: const EdgeInsets.all(16.0),
       itemBuilder: (context, i) {
@@ -65,9 +71,4 @@ class RandomWordsState extends State<RandomWords> {
       ),
     );
   }
-}
-
-class RandomWords extends StatefulWidget {
-  @override
-  RandomWordsState createState() => new RandomWordsState();
 }
