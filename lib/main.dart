@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 
 void main() => runApp(MyApp());
@@ -70,5 +71,23 @@ class RandomWords {
         style: _biggerFont,
       ),
     );
+  }
+}
+
+Future<String> uploadImage(File file) async {
+  String subDirectoryName = 'images';
+  final StorageReference ref = FirebaseStorage()
+      .ref()
+      .child(subDirectoryName);
+  final StorageUploadTask uploadTask = ref.putFile(
+      file,
+      StorageMetadata(
+        contentType: "image/jpeg",
+      ));
+  StorageTaskSnapshot snapshot = await uploadTask.onComplete;
+  if (snapshot.error == null) {
+    return await snapshot.ref.getDownloadURL();
+  } else {
+    return 'Something goes wrong';
   }
 }
