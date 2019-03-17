@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Startup Name Generator!',
-      home: MyHomePage(),
+      home: MyGoogleLoginPage(),
     );
   }
 }
@@ -43,7 +43,12 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class GoogleAuth {
+class MyGoogleLoginPage extends StatefulWidget {
+  @override
+  _MyGoogleLoginPageState createState() => _MyGoogleLoginPageState();
+}
+
+class _MyGoogleLoginPageState extends State<MyGoogleLoginPage>{
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -59,5 +64,25 @@ class GoogleAuth {
     final FirebaseUser user = await _auth.signInWithCredential(credential);
     print("signed in " + user.displayName);
     return user;
+  }
+
+  @override
+  Widget build(BuildContext context){
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('none'),
+      ),
+      body: Center(
+        child: Column(
+          children: <Widget>[
+            SizedBox(height: 24.0),
+            FlatButton(
+              child: Text('SignIn'),
+              onPressed: () => _handleSignIn(),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
