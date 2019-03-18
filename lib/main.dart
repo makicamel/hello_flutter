@@ -78,7 +78,9 @@ class _MyGoogleLoginPageState extends State<MyGoogleLoginPage>{
             SizedBox(height: 24.0),
             FlatButton(
               child: Text('SignIn'),
-              onPressed: () => _handleSignIn(),
+              onPressed: () => _handleSignIn()
+                .then((FirebaseUser user) => print(user))
+                .catchError((e) => print(e))
             ),
           ],
         ),
