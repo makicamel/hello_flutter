@@ -2,8 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-// import 'com.facebook.FacebookSdk';
-// import 'com.facebook.appevents.AppEventsLogger';
+import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 final GoogleSignIn _googleSignIn = GoogleSignIn();
@@ -383,12 +382,6 @@ class _OtherProvidersSignInSectionState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Container(
-          child: const Text(
-              'Test other providers authentication. (We do not provide an API to obtain the token for below providers. Please use a third party service to obtain token for below providers.)'),
-          padding: const EdgeInsets.all(16),
-          alignment: Alignment.center,
-        ),
-        Container(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           alignment: Alignment.center,
           child: Row(
@@ -408,25 +401,12 @@ class _OtherProvidersSignInSectionState
             ],
           ),
         ),
-        TextField(
-          controller: _tokenController,
-          decoration: InputDecoration(labelText: 'Enter provider\'s token'),
-        ),
-        Container(
-          child: _showAuthSecretTextField
-              ? TextField(
-                  controller: _tokenSecretController,
-                  decoration: InputDecoration(
-                      labelText: 'Enter provider\'s authTokenSecret'),
-                )
-              : null,
-        ),
         Container(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           alignment: Alignment.center,
           child: RaisedButton(
             onPressed: () async {
-              _signInWithOtherProvider();
+              _signInWithFacebook();
             },
             child: const Text('Sign in'),
           ),
@@ -450,32 +430,20 @@ class _OtherProvidersSignInSectionState
     });
   }
 
-  void _signInWithOtherProvider() {
-    _signInWithFacebook();
-  }
-
-  // Example code of how to sign in with Facebook.
-  // void _signInWithFacebook() async {
-  //   final FacebookLoginResult result = await facebookSignIn.logInWithReadPermissions(['email']);
-  // }
   void _signInWithFacebook() async {
-    final AuthCredential credential = FacebookAuthProvider.getCredential(
-      accessToken: _tokenController.text,
-    );
-    final FirebaseUser user = await _auth.signInWithCredential(credential);
-    assert(user.email != null);
-    assert(user.displayName != null);
-    assert(!user.isAnonymous);
-    assert(await user.getIdToken() != null);
-
-    final FirebaseUser currentUser = await _auth.currentUser();
-    assert(user.uid == currentUser.uid);
-    setState(() {
-      if (user != null) {
-        _message = 'Successfully signed in with Facebook. ' + user.uid;
-      } else {
-        _message = 'Failed to sign in with Facebook. ';
-      }
-    });
+    var facebookLogin = FacebookLogin();
+    var facebookLoginResult =
+        await facebookLogin.logInWithReadPermissions(['email']);
+    switch (facebookLoginResult.status) {
+      case FacebookLoginStatus.error:
+        print("Error");
+        break;
+      case FacebookLoginStatus.cancelledByUser:
+        print("CancelledByUser");
+        break;
+      case FacebookLoginStatus.loggedIn:
+        print("LoggedIn");
+        break;
+    }
   }
 }
