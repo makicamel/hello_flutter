@@ -23,6 +23,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int _page;
+
   Future getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
     ImageManager.uploadImage(image);
@@ -39,9 +41,45 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add_a_photo),
         onPressed: getImage,
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _page,
+        // onTap: onTapBottomNavigation,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            title: Text("Home")
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            title: Text("Setting")
+          ),
+        ],
+      ),
     );
   }
 }
+
+// class BottmNavigation extends StatelessWidget {
+//   int _page;
+
+//   @override
+//   Widget build(BuildContext context) {
+//     BottomNavigationBar(
+//       currentIndex: _page,
+//       // onTap: onTapBottomNavigation,
+//       items: [
+//         new BottomNavigationBarItem(
+//           icon: new Icon(Icons.home),
+//           title: new Text("Home")
+//         ),
+//         new BottomNavigationBarItem(
+//           icon: new Icon(Icons.settings),
+//           title: new Text("Setting")
+//         ),
+//       ],
+//     );
+//   }
+// }
 
 class MyGoogleLoginPage extends StatefulWidget {
   @override
