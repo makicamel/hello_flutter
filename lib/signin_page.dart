@@ -406,7 +406,7 @@ class _OtherProvidersSignInSectionState
           alignment: Alignment.center,
           child: RaisedButton(
             onPressed: () async {
-              _signInWithFacebook();
+              _signInWithFirebaseFacebook();
             },
             child: const Text('Sign in'),
           ),
@@ -427,6 +427,27 @@ class _OtherProvidersSignInSectionState
     setState(() {
       _selection = value;
       _showAuthSecretTextField = false;
+    });
+  }
+
+  void _signInWithFirebaseFacebook() async {
+    final AuthCredential credential = FacebookAuthProvider.getCredential(
+      accessToken: 'user_access_token',
+    );
+    final FirebaseUser user = await _auth.signInWithCredential(credential);
+    assert(user.email != null);
+    assert(user.displayName != null);
+    assert(!user.isAnonymous);
+    assert(await user.getIdToken() != null);
+
+    final FirebaseUser currentUser = await _auth.currentUser();
+    assert(user.uid == currentUser.uid);
+    setState(() {
+      if (user != null) {
+        _message = 'Successfully signed in with Facebook. ' + user.uid;
+      } else {
+        _message = 'Failed to sign in with Facebook. ';
+      }
     });
   }
 
