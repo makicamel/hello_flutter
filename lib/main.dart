@@ -4,6 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'random_words.dart';
 import 'image_manager.dart';
+import './signin_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -41,20 +42,20 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add_a_photo),
         onPressed: getImage,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _page,
-        // onTap: onTapBottomNavigation,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text("Home")
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            title: Text("Setting")
-          ),
-        ],
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   currentIndex: _page,
+      //   // onTap: onTapBottomNavigation,
+      //   items: <BottomNavigationBarItem>[
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.home),
+      //       title: Text("Home")
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.settings),
+      //       title: Text("Setting")
+      //     ),
+      //   ],
+      // ),
     );
   }
 }
@@ -114,6 +115,10 @@ class _MyGoogleLoginPageState extends State<MyGoogleLoginPage>{
         child: Column(
           children: <Widget>[
             SizedBox(height: 24.0),
+            RaisedButton(
+              child: const Text('Test SignIn/SignOut'),
+              onPressed: () => _pushPage(context, SignInPage()),
+            ),
             FlatButton(
               child: Text('SignIn'),
               onPressed: () => _handleSignIn()
@@ -123,6 +128,12 @@ class _MyGoogleLoginPageState extends State<MyGoogleLoginPage>{
           ],
         ),
       ),
+    );
+  }
+
+  void _pushPage(BuildContext context, Widget page) {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(builder: (_) => page),
     );
   }
 }
