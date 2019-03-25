@@ -42,50 +42,29 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add_a_photo),
         onPressed: getImage,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            title: Text("Home")
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            title: Text("Setting")
-          ),
-        ],
-        onTap: (int index) {
-          setState(() {
-          print("==> ${index}");
-            _currentIndex = index;
-          });
-        },
-      ),
+      bottomNavigationBar: bottomNavigationBar()
     );
   }
 }
 
-// class BottmNavigation extends StatelessWidget {
-//   int _page;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     BottomNavigationBar(
-//       currentIndex: _page,
-//       // onTap: onTapBottomNavigation,
-//       items: [
-//         new BottomNavigationBarItem(
-//           icon: new Icon(Icons.home),
-//           title: new Text("Home")
-//         ),
-//         new BottomNavigationBarItem(
-//           icon: new Icon(Icons.settings),
-//           title: new Text("Setting")
-//         ),
-//       ],
-//     );
-//   }
-// }
+Widget bottomNavigationBar () {
+  return BottomNavigationBar(
+    currentIndex: 0,
+    onTap: (int index) {
+      print("==> ${index}");
+    },
+    items: [
+      new BottomNavigationBarItem(
+        icon: new Icon(Icons.home),
+        title: new Text("Home")
+      ),
+      new BottomNavigationBarItem(
+        icon: new Icon(Icons.settings),
+        title: new Text("Setting")
+      ),
+    ],
+  );
+}
 
 class MyGoogleLoginPage extends StatefulWidget {
   @override
