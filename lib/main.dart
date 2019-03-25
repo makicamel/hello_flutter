@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Startup Name Generator!',
-      home: MyGoogleLoginPage(),
+      home: MyHomePage(),
     );
   }
 }
@@ -24,7 +24,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _page;
+  int _currentIndex = 0;
 
   Future getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
@@ -42,20 +42,25 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add_a_photo),
         onPressed: getImage,
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   currentIndex: _page,
-      //   // onTap: onTapBottomNavigation,
-      //   items: <BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home),
-      //       title: Text("Home")
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.settings),
-      //       title: Text("Setting")
-      //     ),
-      //   ],
-      // ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            title: Text("Home")
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            title: Text("Setting")
+          ),
+        ],
+        onTap: (int index) {
+          setState(() {
+          print("==> ${index}");
+            _currentIndex = index;
+          });
+        },
+      ),
     );
   }
 }
