@@ -41,31 +41,29 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('none'),
       ),
-      body: (new RandomWords()).buildSuggestions(),
+      body: _currentIndex == 0 ? Center(child: Text('left')) : (new RandomWords()).buildSuggestions(),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: 0,
+        onTap: (int index) {
+          setState((){
+            this._currentIndex = index;
+          });
+        },
+        items: [
+          new BottomNavigationBarItem(
+            icon: new Icon(Icons.home),
+            title: new Text("Home")
+          ),
+          new BottomNavigationBarItem(
+            icon: new Icon(Icons.settings),
+            title: new Text("Setting")
+          ),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add_a_photo),
         onPressed: getImage,
       ),
-      bottomNavigationBar: bottomNavigationBar()
     );
   }
-}
-
-Widget bottomNavigationBar () {
-  return BottomNavigationBar(
-    currentIndex: 0,
-    onTap: (int index) {
-      print("==> ${index}");
-    },
-    items: [
-      new BottomNavigationBarItem(
-        icon: new Icon(Icons.home),
-        title: new Text("Home")
-      ),
-      new BottomNavigationBarItem(
-        icon: new Icon(Icons.settings),
-        title: new Text("Setting")
-      ),
-    ],
-  );
 }
