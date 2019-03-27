@@ -28,36 +28,34 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _currentIndex = 0;
-
   Future getImage() async {
     var image = await ImagePicker.pickImage(source: ImageSource.camera);
     ImageManager.uploadImage(image);
   }
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('none'),
       ),
-      body: _currentIndex == 0 ? Center(child: Text('left')) : (new RandomWords()).buildSuggestions(),
+      body: (new RandomWords()).buildSuggestions(),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
         onTap: (int index) {
-          setState((){
-            this._currentIndex = index;
-          });
+          switch (index) {
+            case 1:
+              Navigator.pushNamed(context, '/signInPage');
+              break;
+            default:
+              Navigator.pushNamed(context, '/');
+          }
         },
         items: [
           new BottomNavigationBarItem(
-            icon: new Icon(Icons.home),
-            title: new Text("Home")
-          ),
+              icon: new Icon(Icons.home), title: new Text("SignIn")),
           new BottomNavigationBarItem(
-            icon: new Icon(Icons.settings),
-            title: new Text("Setting")
-          ),
+              icon: new Icon(Icons.settings), title: new Text("RandomWords")),
         ],
       ),
       floatingActionButton: FloatingActionButton(
