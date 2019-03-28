@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'random_words.dart';
 import 'image_manager.dart';
-import './signin_page.dart';
+import 'package:hello_flutter/signin_page.dart';
+import 'package:hello_flutter/widget_sample.dart';
 
 void main() => runApp(MyApp());
 
@@ -17,6 +16,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => MyHomePage(),
         '/signInPage': (context) => SignInPage(),
+        '/widgetSample': (context) => WidgetSample(),
       },
     );
   }
@@ -44,18 +44,26 @@ class _MyHomePageState extends State<MyHomePage> {
         currentIndex: 0,
         onTap: (int index) {
           switch (index) {
-            case 1:
+            case 0:
               Navigator.pushNamed(context, '/signInPage');
+              break;
+            case 1:
+              Navigator.pushNamed(context, '/');
+              break;
+            case 2:
+              Navigator.pushNamed(context, '/widgetSample');
               break;
             default:
               Navigator.pushNamed(context, '/');
           }
         },
         items: [
-          new BottomNavigationBarItem(
-              icon: new Icon(Icons.home), title: new Text("SignIn")),
-          new BottomNavigationBarItem(
-              icon: new Icon(Icons.settings), title: new Text("RandomWords")),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home), title: Text("SignIn")),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings), title: Text("RandomWords")),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.widgets), title: Text("Samples")),
         ],
       ),
       floatingActionButton: FloatingActionButton(
