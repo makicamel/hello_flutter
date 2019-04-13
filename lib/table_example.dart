@@ -7,7 +7,7 @@ class TableExample extends StatefulWidget {
 
 class _TableExampleState extends State<TableExample> {
   Map<String, String> informationList = {
-    '名前': '高橋一生',
+    '名前': '高橋二生',
     '年齢': '35歳',
     '職業': '俳優',
   };
@@ -28,13 +28,15 @@ class informationTable extends Table {
             border: TableBorder(bottom: BorderSide()),
             children: tableRows(list));
 
-  static List tableRows(Map<String, String> list) {
+  static List tableRows(Map<String, String> list,
+      {VoidCallback onPress = null}) {
     List<TableRow> result = [];
 
     list.forEach((key, value) {
       result.add(TableRow(children: [
         TableCell(child: AppText(key)),
         TableCell(child: AppText(value)),
+        onPress == null ? Text('') : TableCell(child: Icon(Icons.edit)),
       ]));
     });
     return result;
