@@ -16,28 +16,29 @@ class _TableExampleState extends State<TableExample> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: informationTable(informationList),
+        child: informationTable(informationList, onPress: () {}),
       ),
     );
   }
 }
 
 class informationTable extends Table {
-  informationTable(Map<String, String> list)
+  informationTable(Map<String, String> list, {VoidCallback onPress = null})
       : super(
             border: TableBorder(bottom: BorderSide()),
-            children: tableRows(list));
+            children: tableRows(list, onPress: onPress));
 
   static List tableRows(Map<String, String> list,
       {VoidCallback onPress = null}) {
     List<TableRow> result = [];
 
     list.forEach((key, value) {
-      result.add(TableRow(children: [
+      result.add(TableRow(
+          children: [
         TableCell(child: AppText(key)),
         TableCell(child: AppText(value)),
-        onPress == null ? Text('') : TableCell(child: Icon(Icons.edit)),
-      ]));
+        onPress == null ? null : TableCell(child: Icon(Icons.edit)),
+      ].where((cell) => cell != null).toList()));
     });
     return result;
   }
