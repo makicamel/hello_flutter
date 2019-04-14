@@ -5,18 +5,25 @@ class TableExample extends StatefulWidget {
   State<TableExample> createState() => _TableExampleState();
 }
 
+Map<String, String> informationLabel = {
+  'nickname': '名前',
+  'age': '年齢!',
+  'residence': '住所',
+};
+
 class _TableExampleState extends State<TableExample> {
-  Map<String, String> informationList = {
-    '名前': '高橋二生',
-    '年齢': '35歳',
-    '職業': '俳優',
+  Map<String, String> informationValue = {
+    'nickname': '高橋二生',
+    'ages': '35歳',
+    'residence': '東京',
+    'job': 'work',
   };
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: informationTable(informationList, onPress: () {}),
+        child: informationTable(informationValue, onPress: () {}),
       ),
     );
   }
@@ -30,9 +37,18 @@ class informationTable extends Table {
 
   static List tableRows(Map<String, String> list,
       {VoidCallback onPress = null}) {
+    Map newList = {};
+    informationLabel.forEach((key, value) {
+      if (list.containsKey(key)) {
+        newList[value] = list[key];
+      } else {
+        // throw AssertionError();
+      }
+    });
+
     List<TableRow> result = [];
 
-    list.forEach((key, value) {
+    newList.forEach((key, value) {
       result.add(TableRow(
           children: [
         TableCell(child: AppText(key)),
